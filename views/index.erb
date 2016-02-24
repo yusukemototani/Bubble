@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bubble</title>
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="assets/css/form.css">
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
 </head>
@@ -66,27 +67,76 @@
         <h2><%= @category_name %></h2>
     <% end %>
     
-    <main>
-        <% @contents.each do |content| %>
-        <article>
-            <section>
-                <h3><%= content.title %></h3>
-                <p><%= content.body %></p>
-                <p><%= content.category.try(:name) %></p>
-                <% unless content.img.empty? %><img src="<%= content.img %>" alt=""><% end %>
-            </section>
-            <div class="edit">
-                <form action="/edit/<%= content.id %>" method="post"><input type="submit" value="編集"></form>
-                <form action="/delete/<%= content.id %>" method="post"><input type="submit" value="削除"></form>
+
+<% @contents.each do |content| %>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
+                            <div class="panel-heading" role="tab" id="headingOne"data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h4 class="panel-title"><%= content.title %></h4>
+                            </div>
+                        </span>
+                        
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <%= content.category.try(:name) %>
+                            </div>
+                        </div>
+                        
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <%= content.body %>
+                            </div>
+                        </div>
+                        
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <i class="fa fa-thumbs-o-up"></i><%= content.iine %>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div> 
+                </div>
             </div>
-                <%= content.iine %>
-            <span>
+            
+            <% unless content.img.empty? %>
+            <div class="col-md-8">
+                <div class="md-macbook-pro md-glare">
+                    <div class="md-lid">
+                        <div class="md-camera"></div>
+                        <div class="md-screen">
+                            <div class="tab-featured-image">
+                                <div class="tab-content">
+                                    <div class="tab-pane  in active" id="tab1">
+                                            <img src="<%= content.img %>" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-base"></div>
+                </div>
+            </div>
+            <% end %>
+            
+                <div class="edit">
+                    <form action="/edit/<%= content.id %>" method="post"><button type="submit" class="btn btn-success btn-lg">編集する</button></form>
+                    <form action="/delete/<%= content.id %>" method="post"><button type="submit" class="btn btn-danger btn-lg">削除する</button></form>
+                </div>
+                
                 <form action="/good/<%= content.id %>" method="post">
-                    <input type="submit" value="いいね">
+                        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-thumbs-o-up"></i></button>
                 </form>
-            </span>
-        </article>
-        <% end %>
-    </main>
+        </div>
+    </div>
+<% end %>
+    
+    
+    
 </body>
 </html>
