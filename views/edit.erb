@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Bubble</title>
+</head>
+<body>
+    <h1>編集モード</h1>
+    <form action="/renew/<%= @content.id %>" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="<%= @content.title %>">
+        <p><textarea name="body" cols="30" rows"10"><%= @content.body %></textarea></p>
+        <select id="categories" name="category">
+            <% @categories.each do |category| %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+            <% end %>
+        </select>
+        <p><input type="file" name="file"></p>
+        <input type="submit" value="更新">
+    </form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Bubble</title>
+</head>
+<body>
+
+    <form action="/new" method="post" enctype="multipart/form-data">
+        <p><input type="text" name="title" placeholder="title"></p>
+        <p><textarea name="body" cols="30" rows"10" placeholder="article"></textarea></p>
+        <select name="category" id="category">
+            <% @categories.each do |category| %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+            <% end %>
+        </select>
+        <p><input type="file" name="file"></p>
+        <input type="submit" value="投稿する">
+    </form>
+    
+    <ul>
+        <% @categories.each do |category| %>
+            <li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
+        <% end %>
+    </ul>
+    
+    <% if @category_name.present? %>
+        <h2><%= @category_name %></h2>
+    <% end %>
+    
+    <main>
+        <% @contents.each do |content| %>
+        <article>
+            <section>
+                <h3><%= content.title %></h3>
+                <p><%= content.body %></p>
+                <p><%= content.category.try(:name) %></p>
+                <% unless content.img.empty? %><img src="<%= content.img %>" alt=""><% end %>
+            </section>
+            <div class="edit">
+                <form action="/edit/<%= content.id %>" method="post"><input type="submit" value="編集"></form>
+                <form action="/delete/<%= content.id %>" method="post"><input type="submit" value="削除"></form>
+            </div>
+                <%= content.iine %>
+            <span>
+                <form action="/good/<%= content.id %>" method="post">
+                    <input type="submit" value="いいね">
+                </form>
+            </span>
+        </article>
+        <% end %>
+    </main>
+</body>
+</html>
