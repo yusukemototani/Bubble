@@ -6,15 +6,21 @@ require 'sinatra/json'
 require './models/bbs.rb'
 require './image_uploader.rb'
 
+enable :sessions
 
 before do
     @categories = Category.all
 end
 
 get '/' do
+    session[:test]
     @contents = Contribution.order('id desc').all
     @categories = Category.all
     erb :index
+end
+
+get '/input' do
+    session[:test] = "hello world"
 end
 
 post '/new' do
