@@ -2,20 +2,49 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Bubble</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>foticle</title>
+    <link rel="stylesheet" type="text/css" href="/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/form.css">
+    <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-1.11.3.js"></script>
 </head>
 <body>
-    <h1>編集モード</h1>
-    <form action="/renew/<%= @content.id %>" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="<%= @content.title %>">
-        <p><textarea name="body" cols="30" rows"10"><%= @content.body %></textarea></p>
-        <select id="categories" name="category">
-            <% @categories.each do |category| %>
-                <option value="<%= category.id %>"><%= category.name %></option>
-            <% end %>
-        </select>
-        <p><input type="file" name="file"></p>
-        <input type="submit" value="更新">
-    </form>
+    
+    <div class="container">
+    <div class="row">
+    <form role="form" class="col-md-9 go-right" action="/renew/<%= @content.id %>" method="post" enctype="multipart/form-data">
+		<h2>編集モード</h2>
+		<div class="form-group">
+			<input type="text" name="title" class="form-control" placeholder="<%= @content.title %>">
+			<label for="name">Title</label>
+	    </div>
+	    <div class="form-group">
+		    <select name="category" id="category">
+                <% @categories.each do |category| %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                <% end %>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="file" name="file" class="form-control" required>
+	    </div>
+	    
+		<div class="row">
+      		<div class="col-md-12">
+          		<div class="form-group">
+                    <textarea name="body" class="form-control textarea" rows="3" name="Message" id="Message"><%= @content.body %></textarea>
+          		</div>
+      	    </div>
+        </div>
+	
+		<div class="form-group">
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary btn-lg">更新する</button>
+          </div>
+        </div>
+	</form>
+	</div>
+	</div>
 </body>
 </html>

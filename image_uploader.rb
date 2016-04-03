@@ -1,10 +1,14 @@
-def image_upload(img)
+def image_upload(img, id=0)
   logger.info "upload now"
   tempfile = img[:tempfile]
   
   upload = Cloudinary::Uploader.upload(tempfile.path)
 
-  contents = Contribution.last
+  if id == 0
+    contents = Contribution.last
+  else
+    contents = Contribution.find(id)
+  end
 
   contents.update_attribute(:img, upload['url'])
 end

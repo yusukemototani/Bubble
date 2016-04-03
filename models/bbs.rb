@@ -3,8 +3,14 @@ ActiveRecord::Base.establish_connection(
 
 class Contribution < ActiveRecord::Base
     belongs_to :category
+    belongs_to :user
 end
 
 class Category < ActiveRecord::Base
     has_many :contributions
+end
+
+class User < ActiveRecord::Base
+    has_many :contributions
+    has_secure_password
 end

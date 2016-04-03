@@ -19,10 +19,6 @@ get '/' do
     erb :index
 end
 
-get '/input' do
-    session[:test] = "hello world"
-end
-
 post '/new' do
     Contribution.create({
         title: params[:title],
@@ -59,7 +55,7 @@ post '/renew/:id' do
         })
         
     if params[:file]
-        image_upload(params[:file])
+        image_upload(params[:file], params[:id])
     end    
         
     redirect '/'
@@ -81,3 +77,47 @@ post '/good/:id' do
     })
     redirect '/'
 end
+
+get '/login.erb' do
+    erb :login
+end
+
+get '/signin' do
+    erb :sign_in
+end
+
+get '/signup' do
+    erb :sign_up
+end
+
+post '/signup' do
+    @user = User.create(mail:params[:mail], password:params[:password],
+    password_confirmation:params[:password_confirmation])
+    
+    if @user.persisted?
+        session[:user] = @user.id
+    end
+    redirect '/'
+end
+
+post '/signin' do
+    user = User.find_by(mail: params[:mail])
+    if user && user.authenticate(params[:password])
+        session[:user] = user.id
+    end
+    redirect '/'
+end
+
+get '/signout' do
+    session[:user] = nil
+    redirect '/'
+end
+
+    
+    
+    
+    
+    
+    
+    
+    
